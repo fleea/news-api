@@ -7,11 +7,29 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import {BrowserRouter as Router, NavLink, Route} from "react-router-dom";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import './app.scss'
 
 const App = () => {
+  return (
+      <Router>
+        <CssBaseline />
+        <Route path="/*" component={mainNav} />
+        <Route exact path="/" component={Home} />
+      </Router>
+  )
+};
+
+const Home = () => {
   const [apiKey, setApiKey] = useState('');
   const [apiKeyTemp, setApiKeyTemp] = useState('');
+  const [category, setCategory] = useState('');
   const onAPIChange = ({target}) => {
     if(!target || !target.value) return;
     setApiKeyTemp(target.value);
@@ -19,31 +37,74 @@ const App = () => {
   const handleKeydown = (event) => {
     event && event.key === 'Enter' && setApiKey(apiKeyTemp);
   };
+  const categoryChange = ({target}) => {
+    if(!target || !target.value) return;
+    setCategory(target.value);
+  };
   return (
-    <>
-      <CssBaseline />
-      <Container>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h4" component="h1" gutterBottom className="news__header">
-                News API example
-              </Typography>
-            <TextField
-                label="News API Key"
-                value={apiKeyTemp}
-                fullWidth={true}
-                onChange={onAPIChange}
-                onKeyDown={handleKeydown}/>
+      <Router>
+        <CssBaseline />
+        <Container>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h4" component="h1" gutterBottom className="news__header">
+                  News API example
+                </Typography>
+                <TextField
+                    label="News API Key"
+                    value={apiKeyTemp}
+                    fullWidth={true}
+                    onChange={onAPIChange}
+                    onKeyDown={handleKeydown}/>
+              </Grid>
+               <Grid item xs={6}>
+                <FormControl className="news--full-width">
+                  <InputLabel htmlFor="category">Category</InputLabel>
+                  <Select
+                      autoWidth={true}
+                      value={category}
+                      onChange={categoryChange}
+                      inputProps={{
+                        name: 'category',
+                        id: 'category',
+                      }}
+                  >
+                    <MenuItem value="">
+                      <em>All</em>
+                    </MenuItem>
+                    <MenuItem value='business'>Business</MenuItem>
+                    <MenuItem value='entertainment'>Entertainment</MenuItem>
+                    <MenuItem value='general'>General</MenuItem>
+                    <MenuItem value='health'>Health</MenuItem>
+                    <MenuItem value='science'>Science</MenuItem>
+                    <MenuItem value='sports'>Sports</MenuItem>
+                    <MenuItem value='technology'>Technology</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-          </Grid>
-        {apiKey && <ArticlePage apiKey={apiKey}/>}
-      </Container>
-    </>
+          {apiKey && <ArticlePage apiKey={apiKey} category={category}/>}
+        </Container>
+      </Router>
   );
 };
 
-const ArticlePage = ({apiKey}) => {
-  const [loading, articles] = useNewsApi(apiKey);
+const mainNav = () => {
+  return (<AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit">
+            Home
+          </Typography>
+        </Toolbar>
+      </AppBar>
+  )
+};
+
+const ArticlePage = ({apiKey, category}) => {
+  const [loading, articles] = useNewsApi({
+    apiKey,
+    category
+  });
   return (
       <>
         {loading && <CircularProgress className="news--padding"/>}

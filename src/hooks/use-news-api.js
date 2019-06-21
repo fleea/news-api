@@ -13,21 +13,22 @@ const instance = axios.create({
     }
 });
 
-export const useNewsApi = (apiKey) => {
+export const useNewsApi = ({apiKey, category}) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const url = `top-headlines?${category ? `${category}&` : ''}country=nl`;
         setLoading(true);
         instance.defaults.headers.Authorization = `Bearer ${apiKey}`;
         instance
-            .get(`top-headlines?country=nl`)
+            .get(url)
             .then(({data}) => {
                 setData(data.articles);
             })
             .then(()=> setLoading(false))
 
-    }, [apiKey]);
+    }, [apiKey, category]);
 
     return [loading, data];
 };
