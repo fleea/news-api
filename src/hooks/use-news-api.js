@@ -18,7 +18,7 @@ export const useNewsApi = ({apiKey, category}) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const url = `top-headlines?${category ? `${category}&` : ''}country=nl`;
+        const url = `top-headlines?${category ? `category=${category}&` : ''}country=nl`;
         setLoading(true);
         instance.defaults.headers.Authorization = `Bearer ${apiKey}`;
         instance

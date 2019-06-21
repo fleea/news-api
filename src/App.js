@@ -14,6 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 import './app.scss'
 
 const App = () => {
@@ -41,21 +42,30 @@ const Home = () => {
     if(!target || !target.value) return;
     setCategory(target.value);
   };
+  const getData = () => setApiKey(apiKeyTemp);
+
   return (
       <Router>
         <CssBaseline />
         <Container>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h4" component="h1" gutterBottom className="news__header">
-                  News API example
-                </Typography>
+              <Typography variant="h4" component="h1" gutterBottom className="news__header">
+                News API example
+              </Typography>
+              </Grid>
+              <Grid item xs={10}>
                 <TextField
                     label="News API Key"
                     value={apiKeyTemp}
                     fullWidth={true}
                     onChange={onAPIChange}
                     onKeyDown={handleKeydown}/>
+              </Grid>
+              <Grid item xs={2}>
+                <Button variant="contained" color="primary" onClick={getData} disabled={!apiKeyTemp}>
+                  Fetch API
+                </Button>
               </Grid>
                <Grid item xs={6}>
                 <FormControl className="news--full-width">
@@ -106,10 +116,10 @@ const ArticlePage = ({apiKey, category}) => {
     category
   });
   return (
-      <>
-        {loading && <CircularProgress className="news--padding"/>}
+      <div className="news--padding">
+        {loading && <CircularProgress/>}
         {!loading && articles && !!articles.length && <ArticleContainer articles={articles}/> }
-      </>
+      </div>
   )
 };
 
