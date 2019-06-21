@@ -13,12 +13,12 @@ const instance = axios.create({
     }
 });
 
-export const useNewsApi = ({apiKey, category}) => {
+export const useNewsApi = ({apiKey, category, pageSize}) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const url = `top-headlines?${category ? `category=${category}&` : ''}country=nl`;
+        const url = `top-headlines?${category ? `category=${category}&` : ''}${pageSize ? `pageSize=${pageSize}&` : `pageSize=12&`}country=nl`;
         setLoading(true);
         instance.defaults.headers.Authorization = `Bearer ${apiKey}`;
         instance
