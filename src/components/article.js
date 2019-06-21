@@ -5,23 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-
-const ArticleContainer = ({articles}) => {
-    return (
-        <Grid container spacing={2}>
-            {
-                (articles || []).map(article =>
-                    <Grid key={article.url} item xs={3}>
-                        <Article article={article}/>
-                    </Grid>
-                 )
-            }
-        </Grid>
-    )
-};
 
 const Article = ({article}) => {
+    if(!article) return null;
     return (
         <Card>
             <CardContent>
@@ -68,4 +54,4 @@ const Article = ({article}) => {
     )
 };
 
-export default ArticleContainer;
+export default Article;
