@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import './app.scss'
 
 const App = () => {
   const [apiKey, setApiKey] = useState('');
@@ -24,7 +25,7 @@ const App = () => {
       <Container>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h4" component="h1" gutterBottom>
+              <Typography variant="h4" component="h1" gutterBottom className="news__header">
                 News API example
               </Typography>
             <TextField
@@ -45,7 +46,7 @@ const ArticlePage = ({apiKey}) => {
   const [loading, articles] = useNewsApi(apiKey);
   return (
       <>
-        {loading && <CircularProgress/>}
+        {loading && <CircularProgress className="news--padding"/>}
         {!loading && articles && !!articles.length && <ArticleContainer articles={articles}/> }
       </>
   )
