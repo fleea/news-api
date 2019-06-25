@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import ArticlePage from "../article-page";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import {BrowserRouter as Route, withRouter} from 'react-router-dom';

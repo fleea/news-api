@@ -1,0 +1,36 @@
+@import "../../variables";
+
+.article {
+  padding: 1rem 0;
+  h5 {
+    color: $base-color-sub;
+    font-weight: normal;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  h6 {
+    margin: 0;
+    color: $base-color-sub;
+  }
+  p {
+    color: $base-color-sub;
+  }
+  a{
+    color: $base-color;
+    position: relative;
+    transition: all 0.3s;
+    .fa {
+      transition: all 0.3s;
+      margin-left: 4px;
+    }
+    &:hover {
+      color: $base-color-active;
+      .fa {
+        transform: translate(10px, 0)
+      }
+    }
+  }
+  h5, h3, a, p {
+    padding: 0 1rem;
+  }
+}
