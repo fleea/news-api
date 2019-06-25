@@ -1,16 +1,12 @@
-import React, {useState} from "react";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import React, {useState, useEffect} from "react";
 import Button from '@material-ui/core/Button';
 import ArticlePage from "./article-page";
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import {withRouter} from 'react-router-dom';
 
-const Home = () => {
+const Home = ({location}) => {
     const [apiKey, setApiKey] = useState('');
     const [apiKeyTemp, setApiKeyTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -18,23 +14,20 @@ const Home = () => {
         if(!target || !target.value) return;
         setApiKeyTemp(target.value);
     };
-    const handleKeydown = (event) => {
-        event && event.key === 'Enter' && setApiKey(apiKeyTemp);
+    const handleKeydown = (event) =>
+        event && event.key === 'Enter' && getData();
+    const getData = () => {
+        setApiKey(apiKeyTemp);
     };
-    const categoryChange = ({target}) => {
-        if(!target || !target.value) return;
-        setCategory(target.value);
-    };
-    const getData = () => setApiKey(apiKeyTemp);
+
+    useEffect(()=> {
+        const urlArray = location.pathname.split('/').filter(item => item && item !== '');
+        setCategory(urlArray[urlArray.length - 1])
+    }, [location.pathname]);
 
     return (
         <Container>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant="h4" component="h1" gutterBottom className="news__header">
-                        News API example
-                    </Typography>
-                </Grid>
                 <Grid item xs={10}>
                     <TextField
                         label="News API Key"
@@ -48,35 +41,10 @@ const Home = () => {
                         Fetch API
                     </Button>
                 </Grid>
-                <Grid item xs={6}>
-                    <FormControl className="news--full-width">
-                        <InputLabel htmlFor="category">Category</InputLabel>
-                        <Select
-                            autoWidth={true}
-                            value={category}
-                            onChange={categoryChange}
-                            inputProps={{
-                                name: 'category',
-                                id: 'category',
-                            }}
-                        >
-                            <MenuItem value="">
-                                <em>All</em>
-                            </MenuItem>
-                            <MenuItem value='business'>Business</MenuItem>
-                            <MenuItem value='entertainment'>Entertainment</MenuItem>
-                            <MenuItem value='general'>General</MenuItem>
-                            <MenuItem value='health'>Health</MenuItem>
-                            <MenuItem value='science'>Science</MenuItem>
-                            <MenuItem value='sports'>Sports</MenuItem>
-                            <MenuItem value='technology'>Technology</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
             </Grid>
             {apiKey && <ArticlePage apiKey={apiKey} category={category}/>}
         </Container>
     );
 };
 
-export default Home;
+export default withRouter(props => <Home {...props}/>);

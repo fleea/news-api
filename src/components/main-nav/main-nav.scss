@@ -1,0 +1,49 @@
+$base-color-active: #17535E; // light-sea-green
+$base-color: #17535E; // light-sea-green
+$base-color-background: #D8ECEF;
+$base-color-sub: #d0ccd0;
+$text-color: #c6538c;
+$spacing-vertical: 1rem;
+$spacing-horizontal: 0.5rem;
+
+.nav {
+  font-weight: bold;
+  ul {
+    padding: 0;
+    li {
+      list-style: none;
+      .fa, .fas {
+        width: 32px;
+      }
+      a {
+        color: $base-color;
+        position: relative;
+        display: block;
+        padding: 0.5rem 1rem;
+        &:hover {
+          background-color: $base-color-background;
+        }
+        &.active {
+          &:before {
+            content: '';
+            display: block;
+            width: 3px;
+            background-color: $base-color;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+  &__header {
+    color: $base-color-sub;
+    margin-left: 1rem;
+  }
+  &__logo {
+    max-width: 150px;
+    margin: 2rem 1rem 1rem 1rem;
+  }
+}
