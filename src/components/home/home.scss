@@ -1,0 +1,26 @@
+@import "../../variables";
+.api-key {
+  position: relative;
+  padding: 2px 4px;
+  width:400px;
+  margin: 1rem auto;
+  display: flex;
+  &__input {
+    display: flex;
+    flex: 1;
+    padding: 0 1rem;
+  }
+  button {
+    background: none;
+    border: none;
+    color: $base-color;
+    &[disabled] {
+      opacity: 0.2;
+    }
+  }
+}
+hr.api-key__divider {
+  width: 1px;
+  height: 28px;
+  margin: 4px;
+}

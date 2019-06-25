@@ -1,11 +1,10 @@
 import React from "react";
 import './main-nav.scss';
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const MainNav = () => {
     return (
         <div className="nav">
-            <h4 className="nav__header">MENU</h4>
             <ul>
                 <li>
                     <NavLink exact={true} activeClassName='active' to='/'>
